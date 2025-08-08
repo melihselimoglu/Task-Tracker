@@ -1,4 +1,4 @@
-package com.SpringBoot.tasks.domain_entities;
+package com.SpringBoot.tasks.domain.entities;
 
 public enum TaskStatus { 
     OPEN, CLOSED
