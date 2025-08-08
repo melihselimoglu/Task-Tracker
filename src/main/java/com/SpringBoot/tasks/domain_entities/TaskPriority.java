@@ -1,4 +1,4 @@
-package com.SpringBoot.tasks.domain.entities;
+package com.SpringBoot.tasks.domain_entities;
 
 public enum TaskPriority {
     HIGH, MEDUM, LOW
