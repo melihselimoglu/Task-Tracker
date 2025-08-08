@@ -8,9 +8,12 @@ import org.springframework.cglib.core.Local;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,25 +40,30 @@ public class Task {
     @Column(name = "priority", nullable = false)
     private TaskPriority priority;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_list_id")
+    private TaskList taskList;
+
     @Column(name = "created", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime created;
 
     @Column(name = "updated", nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime updated;
 
     public Task() {
     }
 
     public Task(UUID id, String title, String description, LocalDateTime dueDate, TaskStatus status,
-            TaskPriority priority, LocalDateTime createdAt, LocalDateTime updatedAt) {
+            TaskPriority priority, TaskList taskList, LocalDateTime created, LocalDateTime updated) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.status = status;
         this.priority = priority;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.taskList = taskList;
+        this.created = created;
+        this.updated = updated;
     }
 
     public UUID getId() {
@@ -106,20 +114,28 @@ public class Task {
         this.priority = priority;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public TaskList getTaskList() {
+        return taskList;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setTaskList(TaskList taskList) {
+        this.taskList = taskList;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 
     @Override
@@ -132,8 +148,9 @@ public class Task {
         result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         result = prime * result + ((priority == null) ? 0 : priority.hashCode());
-        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
-        result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+        result = prime * result + ((taskList == null) ? 0 : taskList.hashCode());
+        result = prime * result + ((created == null) ? 0 : created.hashCode());
+        result = prime * result + ((updated == null) ? 0 : updated.hashCode());
         return result;
     }
 
@@ -166,25 +183,24 @@ public class Task {
                 return false;
         } else if (!dueDate.equals(other.dueDate))
             return false;
-        if (status == null) {
-            if (other.status != null)
-                return false;
-        } else if (!status.equals(other.status))
+        if (status != other.status)
             return false;
-        if (priority == null) {
-            if (other.priority != null)
-                return false;
-        } else if (!priority.equals(other.priority))
+        if (priority != other.priority)
             return false;
-        if (createdAt == null) {
-            if (other.createdAt != null)
+        if (taskList == null) {
+            if (other.taskList != null)
                 return false;
-        } else if (!createdAt.equals(other.createdAt))
+        } else if (!taskList.equals(other.taskList))
             return false;
-        if (updatedAt == null) {
-            if (other.updatedAt != null)
+        if (created == null) {
+            if (other.created != null)
                 return false;
-        } else if (!updatedAt.equals(other.updatedAt))
+        } else if (!created.equals(other.created))
+            return false;
+        if (updated == null) {
+            if (other.updated != null)
+                return false;
+        } else if (!updated.equals(other.updated))
             return false;
         return true;
     }
@@ -192,8 +208,9 @@ public class Task {
     @Override
     public String toString() {
         return "Task [id=" + id + ", title=" + title + ", description=" + description + ", dueDate=" + dueDate
-                + ", status=" + status + ", priority=" + priority + ", createdAt=" + createdAt + ", updatedAt="
-                + updatedAt + "]";
+                + ", status=" + status + ", priority=" + priority + ", taskList=" + taskList + ", created=" + created
+                + ", updated=" + updated + "]";
     }
+
     
 }
