@@ -1,7 +1,7 @@
 package com.SpringBoot.tasks.mappers;
 
-import com.SpringBoot.tasks.domain.dto.TaskDto;
-import com.SpringBoot.tasks.domain.entities.Task;
+import com.SpringBoot.tasks.domain.dto.TaskListDto;
+import com.SpringBoot.tasks.domain.entities.TaskList;
 
 public interface TaskListMapper {
     
