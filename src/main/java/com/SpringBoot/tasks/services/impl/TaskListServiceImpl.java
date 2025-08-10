@@ -1,5 +1,6 @@
 package com.SpringBoot.tasks.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -31,6 +32,15 @@ public class TaskListServiceImpl implements TaskListService {
         if (taskList.getTitle() == null || taskList.getTitle().isBlank()) {
             throw new IllegalArgumentException("TaskList name cannot be null or empty");
         }
-        return null;
+
+        LocalDateTime now = LocalDateTime.now();
+        return taskListRepository.save(new TaskList(
+            null,
+            taskList.getTitle(),
+            taskList.getDescription(),
+            null,
+            now,
+            now
+        ));
     }
 }
