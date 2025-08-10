@@ -22,4 +22,15 @@ public class TaskListServiceImpl implements TaskListService {
 
         return taskListRepository.findAll(); 
     }
+
+    @Override
+    public TaskList createTaskList(TaskList taskList) {
+        if (taskList.getId() != null) {
+            throw new IllegalArgumentException("TaskList ID must be null for creation");
+        }
+        if (taskList.getTitle() == null || taskList.getTitle().isBlank()) {
+            throw new IllegalArgumentException("TaskList name cannot be null or empty");
+        }
+        return null;
+    }
 }
