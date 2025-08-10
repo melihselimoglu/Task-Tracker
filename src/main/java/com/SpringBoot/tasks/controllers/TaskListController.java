@@ -25,8 +25,8 @@ public class TaskListController {
         this.taskListMapper = taskListMapper;
     }
 
-    @GetMapping("path")
-    public List<TaskListDto> listTaskLists(@RequestParam String param) {
+    @GetMapping
+    public List<TaskListDto> listTaskLists() {
         return taskListService.listTaskLists()
                 .stream()
                 .map(taskListMapper::toDto)
