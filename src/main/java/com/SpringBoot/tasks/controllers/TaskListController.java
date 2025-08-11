@@ -9,8 +9,11 @@ import com.SpringBoot.tasks.mappers.TaskListMapper;
 import com.SpringBoot.tasks.services.TaskListService;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -45,4 +48,9 @@ public class TaskListController {
         return taskListMapper.toDto(createdTaskList); 
     }
     
+    @GetMapping(path="/{task_list_id}")
+    public Optional<TaskListDto> getTaskList(@PathVariable("task_list_id") UUID taskListid) {
+        return taskListService.getTaskList(taskListid)
+                .map(taskListMapper::toDto);
+    }
 }
