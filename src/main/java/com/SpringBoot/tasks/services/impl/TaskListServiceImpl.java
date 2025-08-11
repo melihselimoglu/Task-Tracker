@@ -2,6 +2,7 @@ package com.SpringBoot.tasks.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,8 +46,28 @@ public class TaskListServiceImpl implements TaskListService {
             now
         ));
     }
+
     @Override
     public Optional<TaskList> getTaskList(UUID id) {
         return taskListRepository.findById(null);   
-}
+    }
+
+    @Override
+    public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
+        if(null == taskList.getId()) {
+            throw new IllegalArgumentException("TaskList ID cannot be null");
+        }
+
+        if (!Objects.equals(taskListId, taskList.getId())) {
+            throw new IllegalArgumentException("TaskList ID in path does not match TaskList ID in body");
+        }
+        
+        TaskList existingTaskList = taskListRepository.findById(taskListId)
+            .orElseThrow(() -> new IllegalArgumentException("TaskList not found"));
+
+        existingTaskList.setTitle(taskList.getTitle());
+        existingTaskList.setDescription(taskList.getDescription());
+        existingTaskList.setUpdatedAt(LocalDateTime.now());
+        return taskListRepository.save(existingTaskList);
+    }
 }
