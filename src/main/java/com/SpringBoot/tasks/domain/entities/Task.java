@@ -3,11 +3,6 @@ package com.SpringBoot.tasks.domain.entities;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.springframework.cglib.core.Local;
-
-import com.SpringBoot.tasks.domain.entities.TaskPriority;
-import com.SpringBoot.tasks.domain.entities.TaskStatus;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
