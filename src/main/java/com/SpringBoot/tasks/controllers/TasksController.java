@@ -50,4 +50,5 @@ public class TasksController {
     public Optional<TaskDto> getTask(@PathVariable("task_list_id") UUID taskListId, @PathVariable("task_id") UUID taskId) {
         return taskService.getTask(taskListId, taskId)
                 .map(taskMapper::toDto);
+    }
 }
