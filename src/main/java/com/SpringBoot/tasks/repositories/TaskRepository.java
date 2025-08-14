@@ -13,5 +13,5 @@ import com.SpringBoot.tasks.domain.entities.Task;
 public interface TaskRepository extends JpaRepository<Task, UUID> {
     List<Task> findByTaskListId(UUID taskListId);
     Optional<Task> findByTaskListIdAndId(UUID taskListid, UUID Id);
-    
+    void deleteByTaskListIdAndId(UUID taskListId, UUID taskId);
 }
