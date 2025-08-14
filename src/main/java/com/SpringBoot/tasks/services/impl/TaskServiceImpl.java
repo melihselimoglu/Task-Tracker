@@ -2,6 +2,7 @@ package com.SpringBoot.tasks.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -70,4 +71,31 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByTaskListIdAndId(taskListId, taskId);
     }
 
+    @Override
+    public Task updateTask(UUID taskListId, UUID taskId, Task task) {
+        if(null == task.getId()) {
+            throw new IllegalArgumentException("Task must have an ID");
+        }
+        if (!Objects.equals(taskId, task.getId())){
+            throw new IllegalArgumentException("Task ID in path variable and request body must match");
+        }
+        if (null == task.getPriority()) {
+            throw new IllegalArgumentException("Task priority cannot be null");
+        }
+        if (null == task.getStatus()) {
+            throw new IllegalArgumentException("Task status cannot be null");
+        }
+
+        Task existingTask = taskRepository.findByTaskListIdAndId(taskListId, taskId)
+            .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+
+        existingTask.setTitle(task.getTitle());
+        existingTask.setDescription(task.getDescription());
+        existingTask.setDueDate(task.getDueDate());
+        existingTask.setPriority(task.getPriority());
+        existingTask.setStatus(task.getStatus());
+        existingTask.setUpdated(LocalDateTime.now());
+
+        return taskRepository.save(existingTask);
+    }
 }
