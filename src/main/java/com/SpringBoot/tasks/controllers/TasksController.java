@@ -16,6 +16,7 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -50,5 +51,14 @@ public class TasksController {
     public Optional<TaskDto> getTask(@PathVariable("task_list_id") UUID taskListId, @PathVariable("task_id") UUID taskId) {
         return taskService.getTask(taskListId, taskId)
                 .map(taskMapper::toDto);
+    }
+
+    @PutMapping(path = "/{task_id}")
+    public TaskDto updateTask(@PathVariable("task_list_id") UUID taskListId,
+                              @PathVariable("task_id") UUID taskId,
+                              @RequestBody TaskDto taskDto) {
+        Task updatedTask = taskService.updateTask(taskListId, taskId, taskMapper.fromDto(taskDto));
+        
+        return taskMapper.toDto(updatedTask);
     }
 }
