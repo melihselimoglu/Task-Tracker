@@ -16,6 +16,8 @@ import com.SpringBoot.tasks.repositories.TaskListRepository;
 import com.SpringBoot.tasks.repositories.TaskRepository;
 import com.SpringBoot.tasks.services.TaskService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class TaskServiceImpl implements TaskService {
 
@@ -99,6 +101,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.save(existingTask);
     }
 
+    @Transactional
     @Override
     public void deleteTask(UUID taskListId, UUID taskId) {
         taskRepository.deleteByTaskListIdAndId(taskListId, taskId);

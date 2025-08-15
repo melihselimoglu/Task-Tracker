@@ -12,6 +12,8 @@ import com.SpringBoot.tasks.domain.entities.TaskList;
 import com.SpringBoot.tasks.repositories.TaskListRepository;
 import com.SpringBoot.tasks.services.TaskListService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class TaskListServiceImpl implements TaskListService {
 
@@ -52,6 +54,7 @@ public class TaskListServiceImpl implements TaskListService {
         return taskListRepository.findById(null);   
     }
 
+    @Transactional
     @Override
     public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
         if(null == taskList.getId()) {
