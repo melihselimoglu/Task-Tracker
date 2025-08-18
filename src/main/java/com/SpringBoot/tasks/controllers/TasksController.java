@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping(path = "/task-list/{task_list_id}/tasks")
+@RequestMapping(path = "/task-lists/{task_list_id}/tasks")
 public class TasksController {
     
     private final TaskService taskService;
