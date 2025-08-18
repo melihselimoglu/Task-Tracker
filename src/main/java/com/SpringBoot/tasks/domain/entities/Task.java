@@ -31,7 +31,7 @@ public class Task {
     @Column(name = "due_date")
     private LocalDateTime dueDate;
 
-    @Column(name = "status", updatable = false)
+    @Column(name = "status", nullable = false)
     private TaskStatus status;
 
     @Column(name = "priority", nullable = false)
